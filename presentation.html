@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRURU MUSEUM — Future Archaeology Platform (Ministerial Presentation)</title>
+    <!-- Google Fonts: Chakra Petch, IBM Plex Sans Thai, IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gr-void: #0B0B0F;
+            --gr-graphite: #17171F;
+            --gr-grid: #CBD5E1;
+            --gr-fog: #64748B;
+            --gr-paper: #F8FAFC;
+            --gr-paper-pure: #FFFFFF;
+            --gr-lime: #D7FF3A;
+            --gr-lime-dark: #65A30D;
+            --gr-ember: #FF5A1F;
+            --gr-violet: #8C6BFF;
+            --gr-cyan: #0284C7;
+            --gr-cyan-bright: #2EE6FF;
+            --gr-amber: #D97706;
+            --gr-green: #059669;
+            --gr-coral: #E11D48;
+            --font-heading: 'Chakra Petch', sans-serif;
+            --font-body: 'IBM Plex Sans Thai', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #0B0B0F;
+            color: var(--gr-void);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Presentation Stage 16:9 Aspect Ratio */
+        #deck-container {
+            position: relative;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 ratio */
+            max-height: 100vh;
+            max-width: 177.78vh; /* 16:9 ratio */
+            background-color: var(--gr-paper);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Specimen Grid Pattern Background */
+        .specimen-grid {
+            background-image: 
+                radial-gradient(circle, #94A3B8 1px, transparent 1px),
+                linear-gradient(to right, rgba(203, 213, 225, 0.45) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(203, 213, 225, 0.45) 1px, transparent 1px);
+            background-size: 48px 48px, 48px 48px, 48px 48px;
+            background-position: -1px -1px;
+        }
+
+        /* HUD Header */
+        header.hud-header {
+            height: 48px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+        }
+
+        .hud-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gr-void);
+        }
+
+        .brand-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gr-ember);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--gr-ember);
+        }
+
+        .specimen-pill {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            padding: 3px 10px;
+            border-radius: 4px;
+            color: #334155;
+            letter-spacing: 0.5px;
+        }
+
+        .hall-pill {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            padding: 3px 10px;
+            border-radius: 4px;
+            color: #1D4ED8;
+        }
+
+        .hud-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--gr-fog);
+        }
+
+        .btn-hud {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--gr-void);
+            transition: all 0.2s ease;
+        }
+
+        .btn-hud:hover {
+            border-color: var(--gr-ember);
+            color: var(--gr-ember);
+            box-shadow: 2px 2px 0 var(--gr-ember);
+        }
+
+        /* Slide Viewport */
+        #slide-viewport {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            padding: 32px 48px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 24px 44px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* HUD Card with 45 degree chamfer */
+        .hud-card {
+            background: var(--gr-paper-pure);
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+            clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+        }
+
+        .hud-card-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gr-ember), var(--gr-violet));
+        }
+
+        /* Typography */
+        h1.title-main {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3.2vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--gr-void);
+            letter-spacing: -0.5px;
+        }
+
+        h2.title-slide {
+            font-family: var(--font-heading);
+            font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+            font-weight: 700;
+            color: var(--gr-void);
+            margin-bottom: 4px;
+            line-height: 1.25;
+        }
+
+        p.subtitle-slide {
+            font-family: var(--font-body);
+            font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+            color: var(--gr-fog);
+            margin-bottom: 20px;
+        }
+
+        /* Interactive Buttons */
+        .btn-primary {
+            background-color: var(--gr-lime);
+            color: #000000;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            border: 2px solid #000000;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--gr-ember);
+        }
+
+        /* Bottom Controls Bar */
+        footer.hud-footer {
+            height: 48px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .slide-dot {
+            width: 24px;
+            height: 6px;
+            background: #E2E8F0;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slide-dot.active {
+            width: 48px;
+            background: var(--gr-ember);
+        }
+
+        .nav-arrows {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-nav {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--gr-void);
+            transition: all 0.15s ease;
+        }
+
+        .btn-nav:hover {
+            background: #F1F5F9;
+            border-color: var(--gr-void);
+        }
+
+        /* 3-Second Metric Booming Cards */
+        .metric-boom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 16px;
+        }
+
+        .metric-boom-card {
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .metric-boom-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gr-ember);
+            box-shadow: 0 12px 24px -6px rgba(255, 90, 31, 0.12);
+        }
+
+        .metric-number {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3.2vw, 3.4rem);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .metric-label {
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gr-void);
+            margin-bottom: 4px;
+        }
+
+        .metric-desc {
+            font-size: 13px;
+            color: var(--gr-fog);
+            line-height: 1.4;
+        }
+
+        /* Interactive Data Booming Canvas */
+        #booming-stage {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #FFFFFF;
+            border: 1.5px solid #CBD5E1;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Speaker notes drawer */
+        #notes-drawer {
+            position: fixed;
+            bottom: 48px;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            color: #F8FAFC;
+            padding: 16px 24px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 180px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            border-top: 2px solid var(--gr-ember);
+            display: none;
+            z-index: 200;
+        }
+
+        #notes-drawer.open {
+            display: block;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #FFF;
+                height: auto;
+                overflow: visible;
+            }
+            #deck-container {
+                width: 100%;
+                height: auto;
+                max-width: none;
+                max-height: none;
+                box-shadow: none;
+            }
+            header.hud-header, footer.hud-footer, #notes-drawer {
+                display: none !important;
+            }
+            .slide {
+                position: relative;
+                page-break-after: always;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                height: 100vh;
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body class="specimen-grid">
+
+    <div id="deck-container">
+        <!-- Top HUD Header -->
+        <header class="hud-header">
+            <div class="hud-left">
+                <div class="brand-badge">
+                    <span class="brand-badge-dot"></span>
+                    GRURU MUSEUM
+                </div>
+                <div class="specimen-pill" id="hud-specimen-id">GRM-2026-MIN-DIGITAL-001</div>
+                <div class="hall-pill" id="hud-hall-title">HALL 01 // STRATEGIC VISION</div>
+            </div>
+            <div class="hud-right">
+                <span id="current-time">16:20:00</span>
+                <span>•</span>
+                <button class="btn-hud" onclick="toggleNotes()" title="Toggle Speaker Notes (N)">NOTES [N]</button>
+                <button class="btn-hud" onclick="toggleFullscreen()" title="Toggle Fullscreen (F)">FULLSCREEN [F]</button>
+                <button class="btn-hud" onclick="window.print()" title="Print / Save PDF (P)">EXPORT PDF [P]</button>
+            </div>
+        </header>
+
+        <!-- Slide Content Viewport -->
+        <main id="slide-viewport">
+
+            <!-- ============================================== -->
+            <!-- SLIDE 1: Title & Strategic Vision -->
+            <!-- ============================================== -->
+            <section class="slide active" data-specimen="GRM-2026-EXEC-001" data-hall="HALL 01 // EXECUTIVE PITCH">
+                <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; height: 100%; align-items: center;">
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px; align-items: center;">
+                            <span style="background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">
+                                ข้อเสนอเชิงยุทธศาสตร์ต่อรัฐมนตรีด้านดิจิทัล
+                            </span>
+                            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-fog);">
+                                FUTURE ARCHAEOLOGY PLATFORM
+                            </span>
+                        </div>
+
+                        <h1 class="title-main" style="margin-bottom: 8px;">
+                            GRURU MUSEUM
+                        </h1>
+                        <h2 style="font-family: var(--font-heading); font-size: 1.35rem; color: var(--gr-ember); font-weight: 700; margin-bottom: 16px;">
+                            “New Knowledge. New Storytelling. Built for Everyday Living.”
+                        </h2>
+                        <p style="font-size: 1.05rem; line-height: 1.6; color: #334155; margin-bottom: 24px;">
+                            ปลุกคลังภูมิปัญญา ประวัติศาสตร์ และวิทยาศาสตร์ไทยที่ซ่อนอยู่ในอดีต ให้กลับมามีชีวิตในรูปแบบ <strong>Semantic Knowledge Graph</strong> และ <strong>Data Booming Engine</strong> ที่คนรุ่นใหม่เข้าใจได้ภายใน 3 วินาที และนำไปใช้ได้จริงทุกวัน
+                        </p>
+
+                        <!-- 3-Second Quick Booming Tags -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;">
+                            <div class="hud-card" style="padding: 12px 14px; border-left: 3px solid var(--gr-ember);">
+                                <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--gr-ember);">3-5 วินาที</div>
+                                <div style="font-size: 11px; color: var(--gr-fog);">ตัดสินใจเสพ & สรุปภาพรวม</div>
+                            </div>
+                            <div class="hud-card" style="padding: 12px 14px; border-left: 3px solid var(--gr-cyan);">
+                                <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--gr-cyan);">1-Click Verify</div>
+                                <div style="font-size: 11px; color: var(--gr-fog);">ตรวจสอบแหล่งอ้างอิงชัดเจน</div>
+                            </div>
+                            <div class="hud-card" style="padding: 12px 14px; border-left: 3px solid var(--gr-green);">
+                                <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--gr-green);">Everyday Use</div>
+                                <div style="font-size: 11px; color: var(--gr-fog);">เปลี่ยนอดีตสู่ Soft Power จริง</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <button class="btn-primary" onclick="nextSlide()">
+                                เริ่มสำรวจยุทธศาสตร์ →
+                            </button>
+                            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-fog);">
+                                นำเสนอต่อ: ฯพณฯ รัฐมนตรีว่าการกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Thai-Tech Logo Visual -->
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+                        <div class="hud-card" style="padding: 24px; width: 100%; max-width: 440px; display: flex; flex-direction: column; align-items: center; border: 1.5px solid #CBD5E1; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.08);">
+                            <div class="hud-card-accent"></div>
+                            <img src="gruru_logo.jpg" alt="GRURU MUSEUM Logo" style="width: 280px; height: 280px; object-fit: contain; border-radius: 8px;">
+                            <div style="margin-top: 14px; text-align: center;">
+                                <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--gr-void);">
+                                    BRAND EMBLEM ARCHITECTURE
+                                </div>
+                                <div style="font-size: 12px; color: var(--gr-fog); margin-top: 4px;">
+                                    ลายประจำยามไทยผสาน Quantum Graph & Circuit Traces
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 2: Strategic Problem & National Opportunity -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-CRISIS-002" data-hall="HALL 02 // STRATEGIC PROBLEM & OPPORTUNITY">
+                <h2 class="title-slide">ปัญหาเชิงยุทธศาสตร์ & โอกาสของประเทศไทยในยุค Data & AI</h2>
+                <p class="subtitle-slide">ทำไมคลังความรู้เดิมถึงไม่ตอบโจทย์พลเมืองดิจิทัล และประเทศต้องการอะไรในยุคนี้?</p>
+
+                <div class="metric-boom-grid">
+                    <div class="metric-boom-card" style="border-top: 4px solid #EF4444;">
+                        <div class="metric-number" style="color: #EF4444;">84%</div>
+                        <div class="metric-label">Data Silos & Unstructured</div>
+                        <div class="metric-desc">
+                            องค์ความรู้ ประวัติศาสตร์ วิทยาศาสตร์ และภูมิปัญญาไทยกว่า 84% ติดอยู่ในหนังสือเก่า เอกสาร PDF หรือเว็บไซต์โบราณ ไม่พร้อมให้ AI ไทยนำไปประมวลผล
+                        </div>
+                        <div style="margin-top: 12px; padding: 6px 8px; background: #FEF2F2; border-radius: 4px; font-size: 11px; font-family: var(--font-mono); color: #B91C1C;">
+                            ❌ ผลลัพธ์: ความรู้หลับใหล ไร้การเข้าถึง
+                        </div>
+                    </div>
+
+                    <div class="metric-boom-card" style="border-top: 4px solid var(--gr-ember);">
+                        <div class="metric-number" style="color: var(--gr-ember);">3.5 วินาที</div>
+                        <div class="metric-label">Attention Span Crisis</div>
+                        <div class="metric-desc">
+                            คนรุ่นใหม่ (22-40 ปี) ตัดสินใจใน 3-5 วินาที ไม่ทนอ่านสารานุกรมยาวๆ แต่คอนเทนต์สั้นบนโซเชียลมักขาดแหล่งอ้างอิง และเต็มไปด้วยข้อมูลคลาดเคลื่อน
+                        </div>
+                        <div style="margin-top: 12px; padding: 6px 8px; background: #FFF7ED; border-radius: 4px; font-size: 11px; font-family: var(--font-mono); color: #C2410C;">
+                            ❌ ผลลัพธ์: เสพเร็วแต่ตื้นเขิน ไร้ความน่าเชื่อถือ
+                        </div>
+                    </div>
+
+                    <div class="metric-boom-card" style="border-top: 4px solid var(--gr-green);">
+                        <div class="metric-number" style="color: var(--gr-green);">100%</div>
+                        <div class="metric-label">Everyday Application</div>
+                        <div class="metric-desc">
+                            GRURU MUSEUM ออกแบบเพื่อแก้ปัญหาด้วย <strong>Semantic Knowledge Graph + Data Booming</strong> เชื่อมข้อมูลอดีตสู่การประยุกต์ใช้ในชีวิตประจำวันและ Soft Power ทันที
+                        </div>
+                        <div style="margin-top: 12px; padding: 6px 8px; background: #F0FDF4; border-radius: 4px; font-size: 11px; font-family: var(--font-mono); color: #15803D;">
+                            ✅ ทางออก: ลึกแต่ย่อยง่าย สนุกแต่มีหลักฐาน
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Summary Quote -->
+                <div class="hud-card" style="margin-top: 24px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, #FFFFFF, #F8FAFC); border: 1.5px solid #CBD5E1;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <span style="font-size: 28px;">🎯</span>
+                        <div>
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                ยุทธศาสตร์ชาติ: จาก "พิพิธภัณฑ์ตู้กระจก" สู่ "โครงสร้างพื้นฐานความรู้ดิจิทัล (Living Knowledge Graph)"
+                            </div>
+                            <div style="font-size: 13px; color: var(--gr-fog); margin-top: 2px;">
+                                เปลี่ยนบทบาทภาครัฐจากการเป็นผู้เก็บรักษากระดาษ สู่การเป็นผู้เปิดขุมทรัพย์ข้อมูลเชิงความหมายให้ประชาชนและสตาร์ตอัปนำไปต่อยอด
+                            </div>
+                        </div>
+                    </div>
+                    <span class="specimen-pill" style="border-color: var(--gr-ember); color: var(--gr-ember);">
+                        NATIONAL DATA ASSET
+                    </span>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 3: Concept "Future Archaeology" -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-ARCH-003" data-hall="HALL 03 // CONCEPT & POSITIONING">
+                <h2 class="title-slide">แนวคิดหลัก: Future Archaeology “ห้องแล็บนักโบราณคดีจากอนาคต”</h2>
+                <p class="subtitle-slide">จุดบรรจบระหว่างความนิ่งเรียบแบบ Modern Art Gallery กับความล้ำหน้าแบบ Sci-Fi Lab</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; height: calc(100% - 90px);">
+                    <!-- Concept Visual Card -->
+                    <div class="hud-card" style="overflow: hidden; display: flex; flex-direction: column;">
+                        <div class="hud-card-accent"></div>
+                        <img src="gruru_future_lab.jpg" alt="Future Archaeology Lab" style="width: 100%; height: 260px; object-fit: cover;">
+                        <div style="padding: 16px 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <span style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                        บรรยากาศห้องแล็บแห่งอนาคต (Ambient Art & Tech)
+                                    </span>
+                                    <span class="specimen-pill" style="font-size: 10px;">WHITE CUBE x SCI-FI HUD</span>
+                                </div>
+                                <p style="font-size: 12.5px; color: var(--gr-fog); line-height: 1.5;">
+                                    ย้อนมาศึกษาภูมิปัญญาและประวัติศาสตร์มนุษย์เหมือนศึกษาวัตถุโบราณ ผ่านแท่นโฮโลกราฟิก แสดงโหนดความรู้ที่เชื่อมโยงกันในอากาศ
+                                </p>
+                            </div>
+                            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-ember); font-weight: 600;">
+                                BRAND CORE: “อดีตคือข้อมูล • อนาคตคือเรื่องเล่า”
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Perceptual Map & Brand Matrix -->
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="hud-card" style="padding: 18px 20px;">
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void); margin-bottom: 8px;">
+                                🧭 Perceptual Matrix (ตำแหน่งเชิงกลยุทธ์)
+                            </div>
+                            <div style="font-size: 12.5px; color: var(--gr-fog); margin-bottom: 12px;">
+                                เทียบตำแหน่งในตลาดความรู้และการศึกษาดิจิทัล:
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px;">
+                                    <span style="font-weight: 600; font-size: 12px;">สารานุกรมทั่วไป (Wikipedia/ห้องสมุด)</span>
+                                    <span style="font-size: 11px; color: #DC2626; font-family: var(--font-mono);">วิชาการสูง • เล่าแบบเส้นตรง • แห้ง</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px;">
+                                    <span style="font-weight: 600; font-size: 12px;">คอนเทนต์สั้นบน Social Media</span>
+                                    <span style="font-size: 11px; color: #EA580C; font-family: var(--font-mono);">สนุก • ไร้แหล่งอ้างอิง • แยกส่วน</span>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #FEF3C7; border: 1.5px solid #F59E0B; border-radius: 6px;">
+                                    <span style="font-weight: 700; font-size: 12.5px; color: #78350F;">⭐ GRURU MUSEUM</span>
+                                    <span style="font-size: 11px; color: #92400E; font-family: var(--font-mono); font-weight: 700;">“สนุกแต่มีหลักฐาน” + “เครือข่ายโต้ตอบได้”</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Brand Persona -->
+                        <div class="hud-card" style="padding: 16px 20px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void); margin-bottom: 6px;">
+                                🧑‍🔬 Brand Persona: “ภัณฑารักษ์จากอนาคต”
+                            </div>
+                            <p style="font-size: 12.5px; color: #334155; line-height: 1.5;">
+                                บุคลิกฉลาดแต่ไม่เก๊ก ขี้เล่นแต่มีหลักฐานเสมอ (Fun with Evidence) ให้คำมั่นสัญญากับประชาชนว่า <em>"ทุกการเข้าชม จะต้องได้อย่างน้อยหนึ่งเรื่องกลับไปใช้ได้จริงในชีวิต"</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 4: The 5-Step Knowledge Pipeline -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-PIPE-004" data-hall="HALL 04 // 5-STEP PIPELINE">
+                <h2 class="title-slide">พันธกิจ 5 ขั้นตอน: กระบวนการแปรรูปภูมิปัญญาสู่ชีวิตจริง</h2>
+                <p class="subtitle-slide">โครงสร้างเส้นทางข้อมูลมาตรฐานของทุกนิทรรศการใน GRURU MUSEUM</p>
+
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; height: calc(100% - 100px);">
+                    <!-- Step 1 -->
+                    <div class="hud-card" style="padding: 18px 14px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-ember);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--gr-ember);">01</span>
+                            <span class="specimen-pill" style="font-size: 9px;">ORIGIN</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 4px;">
+                            EXCAVATE
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-ember); margin-bottom: 10px; font-weight: 600;">
+                            ขุดค้นข้อมูล
+                        </div>
+                        <p style="font-size: 12px; color: var(--gr-fog); line-height: 1.45; flex: 1;">
+                            คัดสรรความรู้จากประวัติศาสตร์ วิทยาศาสตร์ และภูมิปัญญา ระบุแหล่งที่มาและเอกสารชั้นต้นทุกชิ้นอย่างโปร่งใส
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; font-family: var(--font-mono); color: #334155; background: #F1F5F9; padding: 4px 6px; border-radius: 4px;">
+                            Input: คลังเอกสาร & หนังสือ
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="hud-card" style="padding: 18px 14px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-cyan);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--gr-cyan);">02</span>
+                            <span class="specimen-pill" style="font-size: 9px;">ONTOLOGY</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 4px;">
+                            DECODE
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-cyan); margin-bottom: 10px; font-weight: 600;">
+                            ถอดรหัสเชิงกราฟ
+                        </div>
+                        <p style="font-size: 12px; color: var(--gr-fog); line-height: 1.45; flex: 1;">
+                            สกัดเอนทิตี (Entity) ความสัมพันธ์ (Relation) และห้วงเวลา (Timeline) แปลงข้อความเป็นชุดข้อมูลกราฟความรู้เชิงความหมาย
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; font-family: var(--font-mono); color: #334155; background: #F1F5F9; padding: 4px 6px; border-radius: 4px;">
+                            Input: Entity Extraction
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="hud-card" style="padding: 18px 14px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-violet);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--gr-violet);">03</span>
+                            <span class="specimen-pill" style="font-size: 9px;">VISUAL</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 4px;">
+                            RETELL
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-violet); margin-bottom: 10px; font-weight: 600;">
+                            เล่าใหม่แบบ Visual
+                        </div>
+                        <p style="font-size: 12px; color: var(--gr-fog); line-height: 1.45; flex: 1;">
+                            นำเสนอผ่าน Visual Storytelling และ Infographic ที่กระชับ ดูจบและเข้าใจได้ครบถ้วนภายในเวลาเพียง 3–5 นาที
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; font-family: var(--font-mono); color: #334155; background: #F1F5F9; padding: 4px 6px; border-radius: 4px;">
+                            Output: 3-Min Story
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="hud-card" style="padding: 18px 14px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-amber);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--gr-amber);">04</span>
+                            <span class="specimen-pill" style="font-size: 9px;">NETWORK</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 4px;">
+                            CONNECT
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-amber); margin-bottom: 10px; font-weight: 600;">
+                            ระเบิด Data Booming
+                        </div>
+                        <p style="font-size: 12px; color: var(--gr-fog); line-height: 1.45; flex: 1;">
+                            เปิดให้ผู้ใช้คลิกสำรวจเครือข่ายความรู้ข้ามยุคสมัยและข้ามศาสตร์ ทั้งวิทยาศาสตร์ เทคโนโลยี วัฒนธรรม และศิลปะ
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; font-family: var(--font-mono); color: #334155; background: #F1F5F9; padding: 4px 6px; border-radius: 4px;">
+                            Core: Data Booming
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="hud-card" style="padding: 18px 14px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-green);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--gr-green);">05</span>
+                            <span class="specimen-pill" style="font-size: 9px; color: var(--gr-green);">IMPACT</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 4px;">
+                            APPLY
+                        </div>
+                        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-green); margin-bottom: 10px; font-weight: 600;">
+                            Everyday Takeaway
+                        </div>
+                        <p style="font-size: 12px; color: var(--gr-fog); line-height: 1.45; flex: 1;">
+                            ปิดท้ายด้วยการ์ดความรู้ที่บอกวิธีนำไปใช้ในชีวิตจริง เช่น เคล็ดลับสุขภาพ การต่อยอดงานสร้างสรรค์ หรือวิธีคิดแก้ปัญหา
+                        </p>
+                        <div style="margin-top: 8px; font-size: 10.5px; font-family: var(--font-mono); color: #15803D; background: #F0FDF4; padding: 4px 6px; border-radius: 4px; font-weight: 600;">
+                            Value: ใช้ได้จริงในชีวิต
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 5: Interactive DATA BOOMING Simulation -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-BOOM-005" data-hall="HALL 05 // DATA BOOMING SIMULATOR">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <div>
+                        <h2 class="title-slide">นวัตกรรมเด่น: สถาปัตยกรรม “Data Booming” และกราฟความรู้</h2>
+                        <p class="subtitle-slide" style="margin-bottom: 0;">ทดลองจำลองกลไกการคลิก 1 หัวข้อแล้วระเบิดโหนดความรู้ข้าม 6 มิติใน 40ms</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-primary" id="btn-trigger-boom" onclick="triggerBoom()">
+                            💥 คลิกจุดระเบิด (BOOM DATA)
+                        </button>
+                        <button class="btn-hud" onclick="resetBoom()">รีเซ็ต</button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 340px; gap: 20px; height: calc(100% - 75px);">
+                    <!-- Visual Interactive Canvas Stage -->
+                    <div id="booming-stage">
+                        <canvas id="boom-canvas" width="680" height="380" style="position: absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+                        
+                        <!-- Floating HUD Overlay -->
+                        <div style="position: absolute; top: 12px; left: 16px; background: rgba(255,255,255,0.9); border: 1px solid #CBD5E1; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 11px;">
+                            <span>STATUS: </span><strong id="boom-status" style="color: var(--gr-ember);">READY (คลิกปุ่มเพื่อระเบิดโหนด)</strong> | 
+                            <span>CONNECTIONS: </span><strong id="boom-counter" style="color: var(--gr-cyan);">0</strong>
+                        </div>
+
+                        <!-- Center Seed Node -->
+                        <div id="seed-node" onclick="triggerBoom()" style="position: relative; z-index: 10; width: 110px; height: 110px; border-radius: 50%; background: #0B0B0F; color: #FFF; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--gr-lime); box-shadow: 0 0 25px rgba(215, 255, 58, 0.4); text-align: center; padding: 8px; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+                            <span style="font-size: 16px;">🌿</span>
+                            <span style="font-family: var(--font-heading); font-size: 11px; font-weight: 700; color: var(--gr-lime);">สมุนไพรไทย</span>
+                            <span style="font-size: 9px; color: #94A3B8;">(ศูนย์กลาง)</span>
+                        </div>
+
+                        <!-- Dynamic Orbit Nodes will be rendered here -->
+                        <div id="orbit-nodes-container" style="position: absolute; width: 100%; height: 100%; pointer-events: none;"></div>
+                    </div>
+
+                    <!-- Right Panel: Specimen Details & 6 Dimensions -->
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div class="hud-card" style="padding: 14px 16px;">
+                            <div style="font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; color: var(--gr-ember); margin-bottom: 4px;">
+                                SPECIMEN LABEL // GRM-1872-SCI-014
+                            </div>
+                            <div id="selected-node-title" style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void);">
+                                ฟ้าทะลายโจร & ภูมิปัญญาแพทย์แผนไทย
+                            </div>
+                            <p id="selected-node-desc" style="font-size: 11.5px; color: var(--gr-fog); margin: 6px 0 10px; line-height: 1.4;">
+                                สารแอนโดรกราโฟไลด์ (Andrographolide) ถูกค้นพบและบันทึกในคัมภีร์ใบลาน ก่อนถูกสกัดเป็นยาต้านไวรัสสมัยใหม่
+                            </p>
+                            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 6px 8px; border-radius: 4px;">
+                                <div style="font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; color: #166534;">
+                                    EVERYDAY TAKEAWAY:
+                                </div>
+                                <div id="selected-takeaway" style="font-size: 11px; color: #15803D;">
+                                    เสริมภูมิคุ้มกันด้วยปริมาณ 60 มก./วันเมื่อเริ่มมีอาการหวัด
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6 Dimensions Color & Shape Mapping -->
+                        <div class="hud-card" style="padding: 12px 14px; flex: 1;">
+                            <div style="font-family: var(--font-heading); font-size: 12px; font-weight: 700; color: var(--gr-void); margin-bottom: 8px;">
+                                6 มิติการจัดหมวดหมู่ (WCAG AA Compliant)
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 11px;">
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #0284C7; font-weight:bold;">●</span> วิทยาศาสตร์ (Cyan)
+                                </div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #FF5A1F; font-weight:bold;">⬡</span> ประวัติศาสตร์ (Ember)
+                                </div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #8C6BFF; font-weight:bold;">■</span> เทคโนโลยี (Violet)
+                                </div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #D97706; font-weight:bold;">▲</span> ภูมิปัญญา (Amber)
+                                </div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #059669; font-weight:bold;">◆</span> ธรรมชาติ (Green)
+                                </div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="color: #E11D48; font-weight:bold;">○</span> ศิลปะ (Coral)
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px; font-size: 10.5px; color: var(--gr-fog); border-top: 1px dashed #E2E8F0; padding-top: 6px;">
+                                💡 ผู้ที่มีสายตาบกพร่องเรื่องสีสามารถแยกแยะได้ด้วยรูปทรงเรขาคณิตทันที
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 6: Multi-Source Knowledge Architecture -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-ARCH-006" data-hall="HALL 06 // KNOWLEDGE GRAPH ARCHITECTURE">
+                <h2 class="title-slide">โครงข่ายความรู้แบบบูรณาการ (Integrated Knowledge Graph)</h2>
+                <p class="subtitle-slide">หลอมรวมข้อมูลจาก 4 แหล่งหลัก สู่ขุมพลังปัญญาของชาติ</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px; height: calc(100% - 90px); align-items: center;">
+                    <!-- Embedded Diagram -->
+                    <div class="hud-card" style="padding: 12px; height: 100%; display: flex; align-items: center; justify-content: center; background: #FFFFFF;">
+                        <img src="ChatGPT Image Oct 8, 2026, 09_53_32 PM-1.png" alt="Knowledge Graph Architecture" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;">
+                    </div>
+
+                    <!-- Right Column: Strategic Explanation -->
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="hud-card" style="padding: 18px 20px;">
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void); margin-bottom: 10px;">
+                                4 แหล่งป้อนข้อมูลสู่โครงข่ายกลาง:
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px;">
+                                    <div style="font-weight: 700; font-size: 12px; color: #B45309;">📖 Books & Archives</div>
+                                    <div style="font-size: 11px; color: var(--gr-fog); margin-top: 2px;">จดหมายเหตุ คัมภีร์ ประวัติศาสตร์</div>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px;">
+                                    <div style="font-weight: 700; font-size: 12px; color: #1D4ED8;">🎓 Textbooks & Curricula</div>
+                                    <div style="font-size: 11px; color: var(--gr-fog); margin-top: 2px;">ทฤษฎีวิทยาศาสตร์ หลักสูตรมาตรฐาน</div>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px;">
+                                    <div style="font-weight: 700; font-size: 12px; color: #047857;">🗄️ Public Databases</div>
+                                    <div style="font-size: 11px; color: var(--gr-fog); margin-top: 2px;">ฐานข้อมูลสถิติ & ข้อมูลเปิดภาครัฐ</div>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px;">
+                                    <div style="font-weight: 700; font-size: 12px; color: #6D28D9;">👥 Community Knowledge</div>
+                                    <div style="font-size: 11px; color: var(--gr-fog); margin-top: 2px;">ปราชญ์ชาวบ้าน & ผู้เชี่ยวชาญร่วมสมัย</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hud-card" style="padding: 18px 20px; background: linear-gradient(135deg, #FEF3C7, #F1F5F9); border: 1.5px solid #FCD34D;">
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: #92400E; margin-bottom: 6px;">
+                                🚀 ผลลัพธ์ต่อยุทธศาสตร์ AI แห่งชาติ (National AI Readiness)
+                            </div>
+                            <p style="font-size: 12px; color: #78350F; line-height: 1.5;">
+                                กราฟความรู้นี้ทำหน้าที่เป็น <strong>Ground Truth</strong> ที่ผ่านการกลั่นกรองและตรวจสอบแล้ว จึงสามารถใช้เป็นชุดข้อมูลฝึกฝน (Training / RAG Data) ให้โมเดล AI ภาษาไทยของประเทศ ลดปัญหา AI Hallucination และสร้าง AI ที่เข้าใจวัฒนธรรมไทยอย่างลึกซึ้ง
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 7: Citizen Personas & Economic Impact -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-USER-007" data-hall="HALL 07 // CITIZEN IMPACT">
+                <h2 class="title-slide">กลุ่มพลเมืองเป้าหมายและผลกระทบต่อเศรษฐกิจดิจิทัล</h2>
+                <p class="subtitle-slide">ตอบโจทย์คนวัยทำงานรุ่นใหม่ (22–40 ปี) ด้วย Insight ที่ผ่านการวิเคราะห์มาอย่างแม่นยำ</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; height: calc(100% - 90px);">
+                    <!-- Persona 1 -->
+                    <div class="hud-card" style="padding: 20px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-ember);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--gr-ember);">PERSONA 01</span>
+                            <span class="specimen-pill" style="font-size: 9px;">MOBILE-FIRST</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--gr-void);">
+                            Curious Starter
+                        </div>
+                        <div style="font-size: 12px; color: var(--gr-fog); margin-bottom: 12px;">
+                            อายุ 22–27 ปี • First Jobber / นักศึกษา
+                        </div>
+                        <div style="font-size: 12.5px; color: #334155; line-height: 1.45; flex: 1;">
+                            <strong>พฤติกรรม:</strong> ใช้มือถือเป็นหลัก ชอบภาพสวย ต้องการเรื่องที่ดูจบใน 3–5 นาที ชอบแชร์ต่อบนโซเชียลมีเดีย
+                            <div style="margin-top: 10px; padding: 10px; background: #FFF7ED; border-radius: 6px; border: 1px solid #FFEDD5;">
+                                💡 <strong>ฟีเจอร์ตอบโจทย์:</strong> Data Booming ระเบิดความรู้ในคลิกเดียว พร้อมการ์ด 1080×1350 px สำหรับโพสต์ลง IG/TikTok ทันที
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Persona 2 -->
+                    <div class="hud-card" style="padding: 20px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-violet);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--gr-violet);">PERSONA 02</span>
+                            <span class="specimen-pill" style="font-size: 9px;">SOFT POWER</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--gr-void);">
+                            Creative Professional
+                        </div>
+                        <div style="font-size: 12px; color: var(--gr-fog); margin-bottom: 12px;">
+                            อายุ 25–34 ปี • ดีไซเนอร์ / ครีเอเตอร์ / นักพัฒนา
+                        </div>
+                        <div style="font-size: 12.5px; color: #334155; line-height: 1.45; flex: 1;">
+                            <strong>พฤติกรรม:</strong> มองหาแรงบันดาลใจและข้อมูลอ้างอิงเพื่อนำไปสร้างสรรค์งาน ออกแบบผลิตภัณฑ์ หรือเขียนบทคอนเทนต์
+                            <div style="margin-top: 10px; padding: 10px; background: #F5F3FF; border-radius: 6px; border: 1px solid #EDE9FE;">
+                                💡 <strong>ฟีเจอร์ตอบโจทย์:</strong> Interactive Graph แผนที่ความรู้ฉบับเต็ม ระบบเซฟคอลเลกชัน และดาวน์โหลดชุดข้อมูลไปต่อยอด Soft Power
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Persona 3 -->
+                    <div class="hud-card" style="padding: 20px; display: flex; flex-direction: column; border-top: 4px solid var(--gr-green);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: var(--gr-green);">PERSONA 03</span>
+                            <span class="specimen-pill" style="font-size: 9px;">LIFELONG</span>
+                        </div>
+                        <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--gr-void);">
+                            Lifelong Learner
+                        </div>
+                        <div style="font-size: 12px; color: var(--gr-fog); margin-bottom: 12px;">
+                            อายุ 30–40 ปี • คนทำงาน / พ่อแม่รุ่นใหม่
+                        </div>
+                        <div style="font-size: 12.5px; color: #334155; line-height: 1.45; flex: 1;">
+                            <strong>พฤติกรรม:</strong> ต้องการรู้ที่มาของสิ่งรอบตัว เช่น สุขภาพ อาหาร และการใช้ชีวิต ปฏิเสธข่าวลือ ต้องการแหล่งข้อมูลที่เชื่อถือได้
+                            <div style="margin-top: 10px; padding: 10px; background: #F0FDF4; border-radius: 6px; border: 1px solid #DCFCE7;">
+                                💡 <strong>ฟีเจอร์ตอบโจทย์:</strong> Everyday Takeaway ชัดเจน นำไปใช้ในครอบครัวได้ทันที พร้อมปุ่มเปิดดูแหล่งอ้างอิงต้นฉบับใน 1 คลิก
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 8: Technical Architecture & Standards -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-SYS-008" data-hall="HALL 08 // TECH STACK & ACCESSIBILITY">
+                <h2 class="title-slide">สถาปัตยกรรมระบบและมาตรฐานเทคโนโลยีระดับสากล</h2>
+                <p class="subtitle-slide">ออกแบบบนพื้นฐานความปลอดภัย ความเร็ว และความครอบคลุมสำหรับคนไทยทุกคน</p>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; height: calc(100% - 90px);">
+                    <div class="hud-card" style="padding: 20px; border-left: 4px solid var(--gr-cyan);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                ⚡ Next-Gen Frontend Engine
+                            </div>
+                            <span class="specimen-pill">Next.js + TypeScript</span>
+                        </div>
+                        <ul style="font-size: 12.5px; color: #334155; line-height: 1.6; margin-left: 18px;">
+                            <li>สร้างด้วย Next.js 15, TypeScript และ Tailwind CSS สถาปัตยกรรมระดับองค์กร</li>
+                            <li>ระบบฟอนต์มาตรฐาน TH Sarabun: Chakra Petch (หัวข้อ) และ IBM Plex Sans Thai (เนื้อหา)</li>
+                            <li>ระบบจัดวางแบบ 12/8/4 คอลัมน์ รองรับหน้าจอคอมพิวเตอร์ แท็บเล็ต และสมาร์ตโฟนอย่างไร้รอยต่อ</li>
+                        </ul>
+                    </div>
+
+                    <div class="hud-card" style="padding: 20px; border-left: 4px solid var(--gr-violet);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                🕸️ D3 Force-Directed Canvas
+                            </div>
+                            <span class="specimen-pill">D3.js + HTML5 Canvas</span>
+                        </div>
+                        <ul style="font-size: 12.5px; color: #334155; line-height: 1.6; margin-left: 18px;">
+                            <li>เรนเดอร์กราฟความรู้ขนาด 100,000+ โหนดได้อย่างลื่นไหล 60 FPS บน Canvas</li>
+                            <li>แอนิเมชันการสำรวจตามหลัก Scan → Decode → Connect ระยะเวลา 40–150ms</li>
+                            <li>รองรับการสำรวจผ่านคีย์บอร์ดและมินิแมปสำหรับผู้ใช้งานขั้นสูง</li>
+                        </ul>
+                    </div>
+
+                    <div class="hud-card" style="padding: 20px; border-left: 4px solid var(--gr-green);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                ♿ Global Accessibility (WCAG AA)
+                            </div>
+                            <span class="specimen-pill">WCAG 2.1 AA Compliant</span>
+                        </div>
+                        <ul style="font-size: 12.5px; color: #334155; line-height: 1.6; margin-left: 18px;">
+                            <li>อัตราความคมชัดของสี (Contrast Ratio) สูงถึง 16.8:1 สำหรับเนื้อหาหลัก และ 5.3:1 สำหรับป้ายกำกับ</li>
+                            <li>แยก 6 หมวดหมู่ด้วยรูปทรงเรขาคณิต เพื่อให้ผู้มีความบกพร่องทางสายตาแยกแยะได้</li>
+                            <li>รองรับโหมดลดการเคลื่อนไหว (Prefers-Reduced-Motion) และไม่กะพริบเกิน 3 ครั้ง/วินาที</li>
+                        </ul>
+                    </div>
+
+                    <div class="hud-card" style="padding: 20px; border-left: 4px solid var(--gr-ember);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: var(--gr-void);">
+                                🔗 Open Data & Graph API Ready
+                            </div>
+                            <span class="specimen-pill">JSON-LD / REST / GraphQL</span>
+                        </div>
+                        <ul style="font-size: 12.5px; color: #334155; line-height: 1.6; margin-left: 18px;">
+                            <li>โครงสร้างข้อมูลมาตรฐานสากล: id, title, era, relation (influenced, derived_from, used_in)</li>
+                            <li>พร้อมเปิด Open API เชื่อมต่อกับระบบ e-Government และฐานข้อมูลวัฒนธรรมภาครัฐ</li>
+                            <li>ระบบ Specimen Label ระบุรหัสอ้างอิงชัดเจน เช่น <code>GRM-1872-SCI-014</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 9: Roadmap & Ministerial Proposal -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-PLAN-009" data-hall="HALL 09 // ROADMAP & PROPOSAL">
+                <h2 class="title-slide">แผนการดำเนินงานและข้อเสนอความร่วมมือกับกระทรวงดิจิทัลฯ</h2>
+                <p class="subtitle-slide">โรดแมป 3 ระยะ และข้อเสนอเชิงนโยบายเพื่อขับเคลื่อนระดับชาติ</p>
+
+                <div style="display: flex; flex-direction: column; gap: 16px; height: calc(100% - 90px);">
+                    <!-- 3-Phase Roadmap Bar -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                        <div class="hud-card" style="padding: 16px; border-top: 4px solid var(--gr-ember);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-ember);">
+                                PHASE 1 (Q1-Q2)
+                            </div>
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void); margin: 4px 0 6px;">
+                                Prototype & Design Tokens
+                            </div>
+                            <p style="font-size: 11.5px; color: var(--gr-fog); line-height: 1.4;">
+                                สร้างสถาปัตยกรรมเว็บ กราฟิกจำลอง 50 หัวข้อความรู้ และพัฒนา Data Booming Engine สำหรับทดสอบกลุ่มผู้ใช้ตัวอย่าง
+                            </p>
+                        </div>
+
+                        <div class="hud-card" style="padding: 16px; border-top: 4px solid var(--gr-violet);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-violet);">
+                                PHASE 2 (Q3)
+                            </div>
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void); margin: 4px 0 6px;">
+                                Open Gov Data Integration
+                            </div>
+                            <p style="font-size: 11.5px; color: var(--gr-fog); line-height: 1.4;">
+                                เชื่อมโยงคลังข้อมูลดิจิทัลภาครัฐ (e-Museum, หอสมุดแห่งชาติ, depa) สู่ระบบกราฟความรู้ และทดสอบกับผู้ใช้ 10,000 คน
+                            </p>
+                        </div>
+
+                        <div class="hud-card" style="padding: 16px; border-top: 4px solid var(--gr-green);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-green);">
+                                PHASE 3 (Q4)
+                            </div>
+                            <div style="font-family: var(--font-heading); font-size: 14px; font-weight: 700; color: var(--gr-void); margin: 4px 0 6px;">
+                                National Rollout & Open API
+                            </div>
+                            <p style="font-size: 11.5px; color: var(--gr-fog); line-height: 1.4;">
+                                เปิดตัวเป็นแพลตฟอร์มพิพิธภัณฑ์ความรู้ดิจิทัลแห่งชาติ เปิด Open Graph API ให้นักวิจัยและภาคเอกชนนำไปสร้างสรรค์นวัตกรรม
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Ministerial Request Card -->
+                    <div class="hud-card" style="padding: 20px 24px; background: #FEF3C7; border: 1.5px solid #F59E0B; flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 20px;">🤝</span>
+                            <div style="font-family: var(--font-heading); font-size: 15px; font-weight: 700; color: #92400E;">
+                                ข้อเสนอเชิงนโยบายเพื่อขอรับการสนับสนุนจากกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม (MDES):
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 6px;">
+                            <div style="background: rgba(255,255,255,0.7); padding: 12px; border-radius: 6px;">
+                                <div style="font-weight: 700; font-size: 12px; color: #78350F; margin-bottom: 4px;">1. สนับสนุน Data Sharing</div>
+                                <div style="font-size: 11.5px; color: #451A03; line-height: 1.4;">
+                                    ผลักดันการเชื่อมโยง API คลังเอกสารประวัติศาสตร์และวัฒนธรรมจากหน่วยงานรัฐเข้าสู่โครงข่าย
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.7); padding: 12px; border-radius: 6px;">
+                                <div style="font-weight: 700; font-size: 12px; color: #78350F; margin-bottom: 4px;">2. AI Sandbox National Hub</div>
+                                <div style="font-size: 11.5px; color: #451A03; line-height: 1.4;">
+                                    บรรจุโครงการเข้าเป็น Sandbox ด้าน Semantic Knowledge เพื่อเป็นฐานข้อมูลป้อนโมเดล AI สัญชาติไทย
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.7); padding: 12px; border-radius: 6px;">
+                                <div style="font-weight: 700; font-size: 12px; color: #78350F; margin-bottom: 4px;">3. Lifelong Learning Agenda</div>
+                                <div style="font-size: 11.5px; color: #451A03; line-height: 1.4;">
+                                    บรรจุเป็นส่วนหนึ่งของนโยบายส่งเสริมทักษะดิจิทัลของประชาชนผ่านรูปแบบ Visual EdTech
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- SLIDE 10: Executive Summary & Call to Action -->
+            <!-- ============================================== -->
+            <section class="slide" data-specimen="GRM-2026-END-010" data-hall="HALL 10 // CONCLUSION & NEXT STEPS">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; max-width: 840px; margin: 0 auto;">
+                    <span class="specimen-pill" style="margin-bottom: 16px; border-color: var(--gr-ember); color: var(--gr-ember); font-weight: 700;">
+                        CONCLUSION // STRATEGIC SUMMARY
+                    </span>
+
+                    <h1 class="title-main" style="margin-bottom: 12px; font-size: clamp(1.8rem, 2.8vw, 2.8rem);">
+                        “เปลี่ยนมรดกทางปัญญาของชาติ<br>ให้กลายเป็นพลังขับเคลื่อนชีวิตคนรุ่นใหม่”
+                    </h1>
+
+                    <p style="font-size: 1.1rem; color: var(--gr-fog); line-height: 1.6; margin-bottom: 32px; max-width: 720px;">
+                        GRURU MUSEUM มิใช่เพียงการสร้างเว็บไซต์ใหม่ แต่คือการวาง <strong>โครงสร้างพื้นฐานความรู้ดิจิทัลของประเทศ</strong> ที่ผสานมรดกไทยเข้ากับเทคโนโลยีล้ำสมัย สร้างความภูมิใจ ความรู้ที่ใช้ได้จริง และต่อยอดเศรษฐกิจดิจิทัลอย่างยั่งยืน
+                    </p>
+
+                    <div style="display: flex; gap: 24px; margin-bottom: 36px;">
+                        <div class="hud-card" style="padding: 14px 20px; border-top: 3px solid var(--gr-ember);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-ember);">NEW KNOWLEDGE</div>
+                            <div style="font-size: 12px; color: var(--gr-void); font-weight: 600; margin-top: 2px;">ค้นพบใหม่ & ตรวจสอบได้</div>
+                        </div>
+
+                        <div class="hud-card" style="padding: 14px 20px; border-top: 3px solid var(--gr-violet);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-violet);">NEW STORYTELLING</div>
+                            <div style="font-size: 12px; color: var(--gr-void); font-weight: 600; margin-top: 2px;">เข้าใจใน 3 วินาทีผ่านกราฟ</div>
+                        </div>
+
+                        <div class="hud-card" style="padding: 14px 20px; border-top: 3px solid var(--gr-green);">
+                            <div style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-green);">EVERYDAY LIVING</div>
+                            <div style="font-size: 12px; color: var(--gr-void); font-weight: 600; margin-top: 2px;">นำไปใช้ได้จริงทุกวัน</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <button class="btn-primary" onclick="goToSlide(0)">
+                            ↺ เริ่มต้นการนำเสนอใหม่
+                        </button>
+                        <a href="GRURU_MUSEUM_Digital_Minister_Presentation.pptx" download class="btn-hud" style="padding: 10px 18px; font-size: 12px; text-decoration: none;">
+                            📥 ดาวน์โหลดไฟล์นำเสนอ PowerPoint (.PPTX)
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom HUD Footer -->
+        <footer class="hud-footer">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gr-fog);" id="slide-number-display">
+                    SLIDE 01 / 10
+                </span>
+                <div class="slide-dots" id="slide-dots-container"></div>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--gr-fog);">
+                USE [<kbd>←</kbd>] [<kbd>→</kbd>] OR [<kbd>SPACE</kbd>] TO NAVIGATE
+            </div>
+
+            <div class="nav-arrows">
+                <button class="btn-nav" onclick="prevSlide()" title="Previous slide (←)">‹</button>
+                <button class="btn-nav" onclick="nextSlide()" title="Next slide (→)">›</button>
+            </div>
+        </footer>
+
+        <!-- Speaker Notes Drawer (Toggled by N) -->
+        <div id="notes-drawer">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--gr-ember);">
+                    SPEAKER NOTES // บันทึกคำบรรยายสำหรับผู้นำเสนอต่อท่านรัฐมนตรี
+                </span>
+                <span style="cursor: pointer; font-size: 12px;" onclick="toggleNotes()">✕ ปิด (N)</span>
+            </div>
+            <div id="speaker-note-text">
+                กราบเรียน ฯพณฯ รัฐมนตรีว่าการกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม วันนี้ทีมงานขอนำเสนอโครงการ GRURU MUSEUM แพลตฟอร์มพิพิธภัณฑ์ความรู้ดิจิทัลที่จะเปลี่ยนคลังภูมิปัญญาและประวัติศาสตร์ของชาติ สู่โครงข่ายความรู้ Knowledge Graph และระบบ Data Booming ที่ประชาชนใช้งานได้จริงในชีวิตประจำวันครับ...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Slide Management
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('slide-dots-container');
+        const hudSpecimen = document.getElementById('hud-specimen-id');
+        const hudHall = document.getElementById('hud-hall-title');
+        const slideDisplay = document.getElementById('slide-number-display');
+        const speakerNoteText = document.getElementById('speaker-note-text');
+        let currentSlide = 0;
+
+        const speakerNotes = [
+            "กราบเรียน ฯพณฯ รัฐมนตรีว่าการกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม วันนี้ทีมงานขอนำเสนอโครงการ GRURU MUSEUM แพลตฟอร์มพิพิธภัณฑ์ความรู้ดิจิทัลที่จะเปลี่ยนคลังภูมิปัญญาและประวัติศาสตร์ของชาติ สู่โครงข่ายความรู้ Knowledge Graph และระบบ Data Booming ที่ประชาชนใช้งานได้จริงในชีวิตประจำวันครับ โลโก้โครงการออกแบบด้วยลายประจำยามไทยผสาน Quantum Graph สื่อถึงการเชื่อมโยงรากเหง้าไทยสู่อนาคต",
+            "ท่านรัฐมนตรีครับ ประเทศไทยเรามีขุมทรัพย์ทางปัญญามหาศาล แต่ 84% ติดอยู่ในหนังสือเก่าและเอกสารกระจัดกระจาย ขณะที่คนรุ่นใหม่ตัดสินใจเสพข้อมูลใน 3-5 วินาที หากไม่มีแพลตฟอร์มที่ย่อยง่ายและน่าเชื่อถือ พวกเขาจะเสพคอนเทนต์ไวรัลที่ไม่มีการตรวจสอบ GRURU MUSEUM จึงถูกสร้างขึ้นเพื่อเป็นทางออกเชิงโครงสร้าง",
+            "คอนเซปต์ของโครงการคือ 'Future Archaeology' หรือห้องแล็บของนักโบราณคดีจากอนาคต ที่มองอดีตเป็น Big Data และมองอนาคตเป็นเรื่องเล่า ตำแหน่งของแบรนด์เรายืนอยู่ในจุดที่ไม่มีใครทำ คือ 'สนุกแต่มีหลักฐาน' และ 'เป็นเครือข่ายความรู้ที่สำรวจได้ด้วยตนเอง'",
+            "เราวางกระบวนการไว้ 5 ขั้นตอนมาตรฐาน หรือ 5-Step Pipeline: เริ่มจาก Excavate ขุดค้นและอ้างอิงแหล่งที่มา -> Decode สกัดเป็นกราฟความรู้ -> Retell เล่าด้วยภาพใน 3 นาที -> Connect เชื่อมโยงข้ามศาสตร์ด้วย Data Booming -> และ Apply สรุปเป็นการ์ด Everyday Takeaway ที่นำไปปรับใช้กับชีวิตได้ทันที",
+            "หน้านี้คือหัวใจสำคัญทางเทคโนโลยีครับ เราเรียกว่า 'Data Booming' เมื่อประชาชนสนใจหัวข้อใด เช่น 'สมุนไพรไทย' เพียงคลิกเดียว ระบบจะระเบิดขยายออกเป็น 6-12 โหนดใน 40 มิลลิวินาที ครอบคลุมทั้งวิทยาศาสตร์ ประวัติศาสตร์ เทคโนโลยี ภูมิปัญญา ธรรมชาติ และศิลปะ ทำให้เห็นภาพรวมใน 3 วินาที",
+            "สถาปัตยกรรมนี้หลอมรวมข้อมูลจาก 4 แหล่ง: หนังสือวิชาการ, หลักสูตรการศึกษา, ฐานข้อมูลเปิดภาครัฐ, และปัญญาชุมชน สิ่งนี้มิใช่แค่เว็บสำหรับคนทั่วไป แต่ทำหน้าที่เป็น 'Ground Truth Semantic Data' ที่พร้อมป้อนให้ AI ภาษาไทยของประเทศ เพื่อลดอาการหลอนและสร้าง Sovereign AI ที่เข้าใจรากเหง้าไทย",
+            "กลุ่มผู้ใช้งานหลักคือพลเมืองวัย 22-40 ปี แบ่งเป็น Curious Starter ที่เน้นมือถือและภาพสรุป, Creative Professional ที่ต้องการนำกราฟไปต่อยอดเป็น Soft Power และสินค้าสร้างสรรค์, และ Lifelong Learner ที่ต้องการความรู้สุขภาพและอาหารที่มีหลักฐานทางวิทยาศาสตร์รองรับ",
+            "ด้านเทคโนโลยี เราพัฒนาด้วย Next.js 15, D3.js Canvas และผ่านเกณฑ์การเข้าถึงสากล WCAG AA มี Contrast Ratio สูงถึง 16.8:1 และแยกหมวดด้วยรูปทรงเรขาคณิต เพื่อให้คนไทยทุกคนรวมถึงผู้บกพร่องทางสายตาสามารถเข้าถึงได้อย่างเท่าเทียม",
+            "สำหรับแผนงาน เราแบ่งเป็น 3 เฟสใน 1 ปี โดยเราขอรับการสนับสนุนจากท่านรัฐมนตรีใน 3 ด้านหลัก: 1) การเปิดเชื่อมโยงข้อมูลวัฒนธรรมและประวัติศาสตร์จากหน่วยงานรัฐ 2) สนับสนุนให้เป็น AI Sandbox ของประเทศ และ 3) บรรจุเข้าสู่วาระ Lifelong Learning แห่งชาติ",
+            "บทสรุป: GRURU MUSEUM พร้อมแล้วที่จะเปลี่ยนมรดกทางปัญญาของชาติ ให้กลายเป็นพลังขับเคลื่อนชีวิตคนรุ่นใหม่ ทางทีมงานพร้อมเริ่มดำเนินการทันที และขอขอบพระคุณท่านรัฐมนตรีเป็นอย่างสูงครับ"
+        ];
+
+        // Create Navigation Dots
+        slides.forEach((slide, idx) => {
+            const dot = document.createElement('div');
+            dot.className = `slide-dot ${idx === 0 ? 'active' : ''}`;
+            dot.title = `Go to Slide ${idx + 1}`;
+            dot.onclick = () => goToSlide(idx);
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateSlideUI() {
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === currentSlide);
+            });
+
+            const dots = document.querySelectorAll('.slide-dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+
+            const activeSlide = slides[currentSlide];
+            hudSpecimen.textContent = activeSlide.dataset.specimen || 'GRM-2026-CORE';
+            hudHall.textContent = activeSlide.dataset.hall || 'HALL // KNOWLEDGE';
+            slideDisplay.textContent = `SLIDE ${(currentSlide + 1).toString().padStart(2, '0')} / ${slides.length.toString().padStart(2, '0')}`;
+            speakerNoteText.textContent = speakerNotes[currentSlide] || '';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlideUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideUI();
+            }
+        }
+
+        function goToSlide(idx) {
+            if (idx >= 0 && idx < slides.length) {
+                currentSlide = idx;
+                updateSlideUI();
+            }
+        }
+
+        // Keyboard Navigation
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                goToSlide(0);
+            } else if (e.key === 'End') {
+                goToSlide(slides.length - 1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'n' || e.key === 'N') {
+                toggleNotes();
+            } else if (e.key === 'p' || e.key === 'P') {
+                window.print();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => alert(err.message));
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function toggleNotes() {
+            const drawer = document.getElementById('notes-drawer');
+            drawer.classList.toggle('open');
+        }
+
+        // Live Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toTimeString().split(' ')[0];
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ==========================================
+        // DATA BOOMING SIMULATION ENGINE
+        // ==========================================
+        const boomNodesData = [
+            { id: 1, title: 'แอนโดรกราโฟไลด์', cat: 'วิทยาศาสตร์', shape: '●', color: '#0284C7', desc: 'สารสำคัญทางเภสัชวิทยาที่ยับยั้งการเพิ่มจำนวนของไวรัส', takeaway: 'ใช้รักษาอาการหวัดและเจ็บคอระยะเริ่มต้น' },
+            { id: 2, title: 'คัมภีร์เวชศาสตร์ฉบับหลวง', cat: 'ประวัติศาสตร์', shape: '⬡', color: '#FF5A1F', desc: 'บันทึกตำรับยาโบราณสมัยรัชกาลที่ 5 ชี้วัดความเจริญทางการแพทย์ไทย', takeaway: 'เข้าใจรากเหง้าการผสมผสานการแพทย์ตะวันออก-ตก' },
+            { id: 3, title: 'AI Molecular Screening', cat: 'เทคโนโลยี', shape: '■', color: '#8C6BFF', desc: 'ใช้อัลกอริทึมจำลองการจับตัวของสารสมุนไพรกับโปรตีนเป้าหมาย', takeaway: 'ลดเวลาวิจัยยาสมุนไพรจาก 10 ปีเหลือไม่กี่สัปดาห์' },
+            { id: 4, title: 'ภูมิปัญญาหมอพื้นบ้าน', cat: 'ภูมิปัญญา', shape: '▲', color: '#D97706', desc: 'กรรมวิธีการเก็บเกี่ยวและตากแห้งตามธาตุเจ้าเรือน', takeaway: 'เลือกใช้สมุนไพรให้สอดคล้องกับสภาพร่างกาย' },
+            { id: 5, title: 'การปลูกแบบอินทรีย์แม่นยำ', cat: 'ธรรมชาติ', shape: '◆', color: '#059669', desc: 'เซนเซอร์ IoT วัดความชื้นและแร่ธาตุในดินเพื่อสารสำคัญสูงสุด', takeaway: 'เกษตรกรไทยสร้างมูลค่าเพิ่มสู่ตลาดโลก' },
+            { id: 6, title: 'อัตลักษณ์บรรจุภัณฑ์ไทย', cat: 'ศิลปะ', shape: '○', color: '#E11D48', desc: 'การออกแบบแพ็กเกจจิ้งร่วมสมัยด้วยลายจักสานและสีมงคล', takeaway: 'ยกระดับสินค้าชุมชนสู่ผลิตภัณฑ์พรีเมียมสากล' },
+            { id: 7, title: 'มาตรฐาน อย. & GMP', cat: 'วิทยาศาสตร์', shape: '●', color: '#0284C7', desc: 'การตรวจสอบสารปนเปื้อนและโลหะหนักตามมาตรฐานสากล', takeaway: 'เลือกซื้อสมุนไพรที่มีตรารับรองมาตรฐานเสมอ' },
+            { id: 8, title: 'Soft Power Wellness', cat: 'เทคโนโลยี', shape: '■', color: '#8C6BFF', desc: 'เศรษฐกิจสุขภาวะระดับโลกที่สร้างรายได้เข้าประเทศนับแสนล้าน', takeaway: 'โอกาสทางธุรกิจของครีเอเตอร์และผู้ประกอบการรุ่นใหม่' }
+        ];
+
+        let boomActive = false;
+        const canvas = document.getElementById('boom-canvas');
+        const ctx = canvas.getContext('2d');
+        const orbitContainer = document.getElementById('orbit-nodes-container');
+
+        function triggerBoom() {
+            if (boomActive) return;
+            boomActive = true;
+            document.getElementById('boom-status').textContent = 'BOOMING CASCADE IN PROGRESS...';
+            document.getElementById('boom-status').style.color = '#8C6BFF';
+            orbitContainer.innerHTML = '';
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 135;
+            let counter = 0;
+
+            boomNodesData.forEach((node, i) => {
+                setTimeout(() => {
+                    const angle = (i / boomNodesData.length) * 2 * Math.PI - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+
+                    // Create HTML Node element
+                    const el = document.createElement('div');
+                    el.style.position = 'absolute';
+                    el.style.left = `${x - 42}px`;
+                    el.style.top = `${y - 24}px`;
+                    el.style.width = '84px';
+                    el.style.padding = '6px 4px';
+                    el.style.background = '#FFFFFF';
+                    el.style.border = `2px solid ${node.color}`;
+                    el.style.borderRadius = '6px';
+                    el.style.textAlign = 'center';
+                    el.style.cursor = 'pointer';
+                    el.style.pointerEvents = 'auto';
+                    el.style.boxShadow = `0 4px 12px rgba(0,0,0,0.1), 0 0 10px ${node.color}44`;
+                    el.style.transition = 'all 0.25s ease';
+                    el.style.transform = 'scale(0)';
+                    
+                    el.innerHTML = `
+                        <div style="font-size:9px; font-weight:700; color:${node.color}; font-family:var(--font-mono);">${node.shape} ${node.cat}</div>
+                        <div style="font-size:10px; font-weight:700; color:#0B0B0F; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${node.title}</div>
+                    `;
+
+                    el.onmouseenter = () => {
+                        el.style.transform = 'scale(1.15)';
+                        document.getElementById('selected-node-title').textContent = `${node.title} (${node.cat})`;
+                        document.getElementById('selected-node-desc').textContent = node.desc;
+                        document.getElementById('selected-takeaway').textContent = node.takeaway;
+                    };
+                    el.onmouseleave = () => {
+                        el.style.transform = 'scale(1)';
+                    };
+
+                    orbitContainer.appendChild(el);
+
+                    // Animate In
+                    requestAnimationFrame(() => {
+                        el.style.transform = 'scale(1)';
+                    });
+
+                    // Draw connecting line
+                    drawGraphLines();
+
+                    // Increase counter
+                    counter += Math.floor(Math.random() * 4) + 3;
+                    document.getElementById('boom-counter').textContent = counter;
+
+                    if (i === boomNodesData.length - 1) {
+                        document.getElementById('boom-status').textContent = 'CONNECTED • 8 SUB-NODES ACTIVATED';
+                        document.getElementById('boom-status').style.color = '#15803D';
+                    }
+                }, i * 40); // 40ms stagger per brief specification!
+            });
+        }
+
+        function drawGraphLines() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 135;
+
+            boomNodesData.forEach((node, i) => {
+                const angle = (i / boomNodesData.length) * 2 * Math.PI - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                // Draw ray
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = `${node.color}55`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Draw outer circle ring
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+            });
+
+            // Ambient pulse ring
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(215, 255, 58, 0.25)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function resetBoom() {
+            boomActive = false;
+            orbitContainer.innerHTML = '';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('boom-status').textContent = 'READY (คลิกปุ่มเพื่อระเบิดโหนด)';
+            document.getElementById('boom-status').style.color = 'var(--gr-ember)';
+            document.getElementById('boom-counter').textContent = '0';
+        }
+    </script>
+</body>
+</html>
